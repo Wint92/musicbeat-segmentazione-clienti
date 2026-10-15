@@ -33,6 +33,7 @@ In alternativa si può eseguire sul proprio computer, come descritto in "Come es
 | `risultati/profilo_gruppi.csv` | Valori medi e numerosità di ciascun gruppo |
 | `risultati/confronto_k.csv` | Inertia e silhouette per k da 2 a 8 |
 | `risultati/modello.joblib` | Scaler e modello K-means salvati (usati dalla dashboard) |
+| `risultati/nuovi_clienti.csv` | Creato solo se si aggiungono clienti dalla dashboard (non è incluso nel progetto) |
 | `grafici/` | Grafici del metodo del gomito, della silhouette e dei gruppi |
 
 ## Come eseguirlo
@@ -107,7 +108,7 @@ I nomi dei gruppi sono assegnati da `segmentazione.py` con regole basate sulle m
 - **Idee di offerta**: interpretazione di marketing di ogni gruppo.
 - **Nuovo cliente**: inserendo accessi, giorni dall'ultimo accesso, data di iscrizione, piano,
   zona e categoria, "Trova il gruppo" mostra il gruppo di appartenenza, mentre
-  "Aggiungi ai clienti" aggiunge il cliente alla sessione corrente e aggiorna totali e grafici
+  "Aggiungi ai clienti" salva il cliente in `risultati/nuovi_clienti.csv` e aggiorna totali e grafici
   (da 450 a 451 clienti). "Elimina i clienti aggiunti" riporta ai 450 originali.
   I mesi pagati sono calcolati dalla data di iscrizione.
 - **Come sono stati scelti i gruppi**: tabella e grafici di gomito e silhouette.
