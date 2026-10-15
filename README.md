@@ -8,6 +8,18 @@ dashboard interattiva permette di esplorarli.
 > Tutti i dati sono generati per l'occasione. Non contengono informazioni personali:
 > ogni cliente è identificato da un codice anonimo (C0001, C0002, ...).
 
+## Prova la dashboard online
+
+Per usare la dashboard **non serve installare nulla**: basta aprire questo link.
+
+👉 **https://TUO-INDIRIZZO.streamlit.app**
+
+Aprendo `dashboard.py` qui su GitHub si vede soltanto il codice; la dashboard funziona dal
+link qui sopra. Se compare il messaggio "This app has gone to sleep", cliccare sul pulsante
+per riattivarla (ci vuole circa un minuto).
+
+In alternativa si può eseguire sul proprio computer, come descritto in "Come eseguirlo".
+
 ## Contenuto
 
 | File | A cosa serve |
