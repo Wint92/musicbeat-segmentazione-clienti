@@ -22,6 +22,14 @@ if risultati is None:
     st.stop()
 clienti, confronto, modello = risultati
 
+# I clienti aggiunti dalla dashboard restano solo in questa sessione del browser:
+# non si scrive nessun file, quindi chi riapre la pagina trova sempre i 450 originali.
+if "nuovi" not in st.session_state:
+    st.session_state["nuovi"] = []
+if st.session_state["nuovi"]:
+    nuovi = pd.DataFrame(st.session_state["nuovi"])
+    clienti = pd.concat([clienti, nuovi], ignore_index=True)
+
 st.title("MusicBeat · Segmentazione dei clienti")
 st.caption(
     "Dati interamente simulati, senza informazioni personali. "
@@ -105,7 +113,7 @@ with tab_nuovo:
     st.write(
         "Inserisci i dati di un nuovo cliente. Puoi vedere a quale gruppo appartiene "
         "(\"Trova il gruppo\") oppure aggiungerlo ai clienti (\"Aggiungi ai clienti\"): "
-        "in quel caso i totali e i grafici si aggiornano."
+        "in quel caso i totali e i grafici si aggiornano (finché non ricarichi la pagina)."
     )
     with st.form("nuovo_cliente"):
         a, b = st.columns(2)
@@ -135,7 +143,7 @@ with tab_nuovo:
                 clienti, modello, zona_nuovo, categoria_nuovo, data_iscrizione, piano, accessi, giorni
             )
             if aggiungi:
-                lg.salva_nuovo_cliente(riga)
+                st.session_state["nuovi"].append(riga)
                 st.session_state["messaggio"] = (
                     f"Cliente {riga['ID_cliente']} aggiunto: gruppo «{riga['Nome_gruppo']}». "
                     f"I clienti sono ora {len(clienti) + 1}."
@@ -157,7 +165,7 @@ with tab_nuovo:
     if n_nuovi > 0:
         st.write(f"Clienti aggiunti finora: {n_nuovi}.")
         if st.button("Elimina i clienti aggiunti"):
-            lg.elimina_nuovi_clienti()
+            st.session_state["nuovi"] = []
             st.session_state["messaggio"] = "Clienti aggiunti eliminati: si torna ai dati originali."
             st.rerun()
 

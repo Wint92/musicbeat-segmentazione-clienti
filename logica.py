@@ -11,8 +11,6 @@ import pandas as pd
 
 CARTELLA = Path(__file__).parent
 FILE_CLIENTI = CARTELLA / "risultati" / "clienti_segmentati.csv"
-# I clienti aggiunti dalla dashboard sono salvati qui, a parte: i 450 dati originali non cambiano.
-FILE_NUOVI = CARTELLA / "risultati" / "nuovi_clienti.csv"
 DATA_RIFERIMENTO = pd.Timestamp("2026-10-01")  # "oggi" per il dataset simulato
 FILE_PROFILO = CARTELLA / "risultati" / "profilo_gruppi.csv"
 FILE_CONFRONTO = CARTELLA / "risultati" / "confronto_k.csv"
@@ -56,10 +54,6 @@ def carica_risultati():
     if not (FILE_CLIENTI.exists() and FILE_MODELLO.exists()):
         return None
     clienti = pd.read_csv(FILE_CLIENTI, parse_dates=["Data_iscrizione"])
-    # Se sono stati aggiunti dei clienti dalla dashboard, li mettiamo in fondo alla tabella
-    if FILE_NUOVI.exists():
-        nuovi = pd.read_csv(FILE_NUOVI, parse_dates=["Data_iscrizione"])
-        clienti = pd.concat([clienti, nuovi], ignore_index=True)
     confronto = pd.read_csv(FILE_CONFRONTO) if FILE_CONFRONTO.exists() else None
     modello = joblib.load(FILE_MODELLO)
     return clienti, confronto, modello
@@ -114,18 +108,6 @@ def crea_riga_cliente(clienti, modello, zona, categoria, data_iscrizione, piano,
         "Gruppo": gruppo,
         "Nome_gruppo": nome_gruppo,
     }
-
-
-def salva_nuovo_cliente(riga):
-    """Aggiunge il cliente al file dei nuovi clienti (lo crea se non esiste)."""
-    tabella = pd.DataFrame([riga])
-    tabella.to_csv(FILE_NUOVI, mode="a", header=not FILE_NUOVI.exists(), index=False)
-
-
-def elimina_nuovi_clienti():
-    """Cancella i clienti aggiunti dalla dashboard: si torna ai 450 originali."""
-    if FILE_NUOVI.exists():
-        FILE_NUOVI.unlink()
 
 
 def assegna_gruppo(modello, accessi, importo, giorni):
