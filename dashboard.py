@@ -88,15 +88,29 @@ with tab_gruppi:
 
 # ---------- Idee di offerta ----------
 with tab_offerte:
-    st.caption("Ipotesi di marketing basate su dati simulati.")
+    st.caption(
+        "Ipotesi di marketing basate su dati simulati: andrebbero verificate con una prova "
+        "su una parte dei clienti (test A/B)."
+    )
+    ricavi_totali = filtrati["Importo_totale_90gg"].sum()
     righe = []
     for nome in lg.GRUPPI:
-        descrizione, offerta = lg.GRUPPI[nome]
+        descrizione, offerta, obiettivo, indicatore = lg.GRUPPI[nome]
+        del_gruppo = filtrati[filtrati["Nome_gruppo"] == nome]
+        ricavi = int(del_gruppo["Importo_totale_90gg"].sum())
+        if ricavi_totali > 0:
+            percentuale = round(100 * ricavi / ricavi_totali, 1)
+        else:
+            percentuale = 0
         righe.append({
             "Gruppo": nome,
-            "Clienti": int((filtrati["Nome_gruppo"] == nome).sum()),
+            "Clienti": len(del_gruppo),
+            "Ricavi 90 gg (€)": ricavi,
+            "% dei ricavi": percentuale,
             "Chi sono": descrizione,
             "Idea di offerta": offerta,
+            "Obiettivo": obiettivo,
+            "Come misurarlo": indicatore,
         })
     st.dataframe(pd.DataFrame(righe), hide_index=True)
 
@@ -142,7 +156,7 @@ with tab_nuovo:
                 )
                 st.rerun()  # ricarica la pagina, così i totali si aggiornano
             else:
-                descrizione, offerta = lg.GRUPPI[riga["Nome_gruppo"]]
+                descrizione, offerta, obiettivo, indicatore = lg.GRUPPI[riga["Nome_gruppo"]]
                 st.success(f"Gruppo di appartenenza: **{riga['Nome_gruppo']}**")
                 st.write(
                     f"Importo negli ultimi 90 giorni: {riga['Importo_totale_90gg']} € "
@@ -150,6 +164,7 @@ with tab_nuovo:
                 )
                 st.write(f"**Chi sono:** {descrizione}")
                 st.write(f"**Idea di offerta:** {offerta}")
+                st.write(f"**Obiettivo:** {obiettivo}. **Come misurarlo:** {indicatore}.")
                 st.caption("Il cliente non è stato aggiunto. Premi \"Aggiungi ai clienti\" per salvarlo.")
 
     # Clienti aggiunti: si possono eliminare per tornare ai dati originali

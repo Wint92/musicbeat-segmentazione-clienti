@@ -27,26 +27,37 @@ ETICHETTE = {
 PREZZI_MENSILI = {"Gratis": 0, "Basic": 10, "Family": 25}
 
 # Interpretazione di marketing: ipotesi basate su dati simulati.
+# Per ogni gruppo: chi sono, idea di offerta, obiettivo, come misurare se l'offerta funziona.
 GRUPPI = {
     "Famiglie attive": (
         "Piano Family, ascoltano molto e di recente.",
         "Niente sconti: vantaggi esclusivi per mantenerli.",
+        "Non perderli",
+        "Disdette nel periodo",
     ),
     "Famiglie meno attive": (
         "Piano Family, ma pochi accessi: pagano il piano più caro e lo usano poco.",
         "Playlist e suggerimenti di famiglia per aumentare l'uso, prima di una possibile disdetta.",
+        "Far usare il piano che pagano",
+        "Aumento degli accessi in 30 giorni",
     ),
     "Attivi con piano base": (
         "Ascoltano molto con un piano Basic o Gratis.",
         "Passaggio a Family con sconto di benvenuto.",
+        "Aumentare il ricavo medio",
+        "Clienti passati a Family",
     ),
     "Intermedi e nuovi": (
         "Attività media, in prevalenza Gratis o Basic. Comprende quasi tutti i clienti recenti.",
         "Prova del piano Basic per i Gratis e suggerimenti musicali per aumentare l'ascolto.",
+        "Convertire i clienti Gratis",
+        "Clienti passati da Gratis a Basic",
     ),
     "Inattivi": (
         "Pochissimi accessi e molti giorni senza ascoltare.",
         "Campagna di riattivazione; offerta di fidelizzazione per chi paga un abbonamento.",
+        "Farli tornare ad ascoltare",
+        "Clienti con un nuovo accesso entro 30 giorni",
     ),
 }
 

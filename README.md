@@ -105,7 +105,8 @@ I nomi dei gruppi sono assegnati da `segmentazione.py` con regole basate sulle m
 
 - **Filtri** (barra laterale): zona, periodo di iscrizione, categoria preferita.
 - **Gruppi**: grafico a dispersione (assi selezionabili), profilo e numerosità di ciascun gruppo.
-- **Idee di offerta**: interpretazione di marketing di ogni gruppo.
+- **Idee di offerta**: per ogni gruppo, chi sono, idea di offerta, obiettivo, come misurarne l'effetto,
+  e il peso economico (clienti, ricavi e percentuale dei ricavi, che cambiano con i filtri).
 - **Nuovo cliente**: inserendo accessi, giorni dall'ultimo accesso, data di iscrizione, piano,
   zona e categoria, "Trova il gruppo" mostra il gruppo di appartenenza, mentre
   "Aggiungi ai clienti" salva il cliente in `risultati/nuovi_clienti.csv` e aggiorna totali e grafici
