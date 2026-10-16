@@ -93,9 +93,10 @@ with tab_offerte:
         "su una parte dei clienti (test A/B)."
     )
     ricavi_totali = filtrati["Importo_totale_90gg"].sum()
+
+    # Prima tabella: solo i numeri (poche colonne, si legge senza scorrere)
     righe = []
     for nome in lg.GRUPPI:
-        descrizione, offerta, obiettivo, indicatore = lg.GRUPPI[nome]
         del_gruppo = filtrati[filtrati["Nome_gruppo"] == nome]
         ricavi = int(del_gruppo["Importo_totale_90gg"].sum())
         if ricavi_totali > 0:
@@ -107,12 +108,18 @@ with tab_offerte:
             "Clienti": len(del_gruppo),
             "Ricavi 90 gg (€)": ricavi,
             "% dei ricavi": percentuale,
-            "Chi sono": descrizione,
-            "Idea di offerta": offerta,
-            "Obiettivo": obiettivo,
-            "Come misurarlo": indicatore,
         })
     st.dataframe(pd.DataFrame(righe), hide_index=True)
+
+    # Poi un riquadro per ogni gruppo, con l'offerta: si legge dall'alto in basso
+    for nome in lg.GRUPPI:
+        descrizione, offerta, obiettivo, indicatore = lg.GRUPPI[nome]
+        with st.container(border=True):
+            st.markdown(f"**{nome}**")
+            st.write(f"**Chi sono:** {descrizione}")
+            st.write(f"**Idea di offerta:** {offerta}")
+            st.write(f"**Obiettivo:** {obiettivo}")
+            st.write(f"**Come misurarlo:** {indicatore}")
 
 # ---------- Nuovo cliente ----------
 with tab_nuovo:
