@@ -27,37 +27,54 @@ ETICHETTE = {
 PREZZI_MENSILI = {"Gratis": 0, "Basic": 10, "Family": 25}
 
 # Interpretazione di marketing: ipotesi basate su dati simulati.
-# Per ogni gruppo: chi sono, idea di offerta, obiettivo, come misurare se l'offerta funziona.
+# Per ogni gruppo: chi sono, offerta (azione e prezzo), obiettivo, come misurarlo, perché conviene.
+# Gli sconti sono calcolati sui prezzi di listino: Basic 10 €/mese, Family 25 €/mese.
 GRUPPI = {
     "Famiglie attive": (
         "Piano Family, ascoltano molto e di recente.",
-        "Niente sconti: vantaggi esclusivi per mantenerli.",
+        "Nessuno sconto. Vantaggi esclusivi inclusi nel piano Family a 25 € al mese: accesso anticipato "
+        "ai nuovi contenuti e un profilo extra senza costo.",
         "Non perderli",
         "Disdette nel periodo",
+        "Pagano già il prezzo pieno e usano molto il servizio: uno sconto ridurrebbe i ricavi senza "
+        "bisogno, mentre i vantaggi esclusivi costano poco e aumentano la fedeltà.",
     ),
     "Famiglie meno attive": (
         "Piano Family, ma pochi accessi: pagano il piano più caro e lo usano poco.",
-        "Playlist e suggerimenti di famiglia per aumentare l'uso, prima di una possibile disdetta.",
+        "Un mese di Family a 20 € invece di 25 € (-20%), insieme a playlist di famiglia e promemoria "
+        "di ascolto.",
         "Far usare il piano che pagano",
         "Aumento degli accessi in 30 giorni",
+        "Lo sconto costa 5 € a cliente, una volta sola; se il cliente disdice si perdono 25 € al mese.",
     ),
     "Attivi con piano base": (
         "Ascoltano molto con un piano Basic o Gratis.",
-        "Passaggio a Family con sconto di benvenuto.",
+        "Passaggio a Family con 2 mesi a 15 € invece di 25 € (-40%), poi 25 € al mese. Per i pochi con "
+        "piano Gratis, prima un mese di Basic a 5 €.",
         "Aumentare il ricavo medio",
         "Clienti passati a Family",
+        "Anche durante lo sconto il cliente paga 5 € in più al mese rispetto al Basic (15 € contro "
+        "10 €); finito lo sconto, 15 € in più.",
     ),
     "Intermedi e nuovi": (
         "Attività media, in prevalenza Gratis o Basic. Comprende quasi tutti i clienti recenti.",
-        "Prova del piano Basic per i Gratis e suggerimenti musicali per aumentare l'ascolto.",
+        "Ai clienti Gratis, il primo mese di Basic a 5 € invece di 10 € (-50%), con suggerimenti "
+        "musicali sulle categorie preferite. Ai nuovi iscritti, un messaggio di benvenuto con le "
+        "playlist più ascoltate.",
         "Convertire i clienti Gratis",
         "Clienti passati da Gratis a Basic",
+        "Un cliente Gratis non porta ricavi: ogni passaggio a Basic dà almeno 5 € il primo mese e poi "
+        "10 € al mese.",
     ),
     "Inattivi": (
         "Pochissimi accessi e molti giorni senza ascoltare.",
-        "Campagna di riattivazione; offerta di fidelizzazione per chi paga un abbonamento.",
+        "Per chi paga il Basic: 3 mesi a 5 € invece di 10 € (-50%), con il messaggio «Ci sei mancato» e "
+        "novità scelte per lui. Per chi ha il piano Gratis: solo il messaggio di riattivazione, senza "
+        "sconto.",
         "Farli tornare ad ascoltare",
         "Clienti con un nuovo accesso entro 30 giorni",
+        "Un Basic che non ascolta rischia di disdire e di far perdere 10 € al mese; lo sconto costa 5 € "
+        "al mese per tre mesi. Ai clienti Gratis il messaggio non costa nulla.",
     ),
 }
 

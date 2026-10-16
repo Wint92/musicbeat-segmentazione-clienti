@@ -89,8 +89,8 @@ with tab_gruppi:
 # ---------- Idee di offerta ----------
 with tab_offerte:
     st.caption(
-        "Ipotesi di marketing basate su dati simulati: andrebbero verificate con una prova "
-        "su una parte dei clienti (test A/B)."
+        "Ipotesi di marketing basate su dati simulati. Gli sconti sono calcolati sui prezzi di listino "
+        "(Basic 10 €/mese, Family 25 €/mese) e andrebbero verificati con una prova su una parte dei clienti (test A/B)."
     )
     ricavi_totali = filtrati["Importo_totale_90gg"].sum()
 
@@ -113,11 +113,12 @@ with tab_offerte:
 
     # Poi un riquadro per ogni gruppo, con l'offerta: si legge dall'alto in basso
     for nome in lg.GRUPPI:
-        descrizione, offerta, obiettivo, indicatore = lg.GRUPPI[nome]
+        descrizione, offerta, obiettivo, indicatore, perche = lg.GRUPPI[nome]
         with st.container(border=True):
             st.markdown(f"**{nome}**")
             st.write(f"**Chi sono:** {descrizione}")
-            st.write(f"**Idea di offerta:** {offerta}")
+            st.write(f"**Offerta da proporre:** {offerta}")
+            st.write(f"**Perché conviene:** {perche}")
             st.write(f"**Obiettivo:** {obiettivo}")
             st.write(f"**Come misurarlo:** {indicatore}")
 
@@ -163,14 +164,14 @@ with tab_nuovo:
                 )
                 st.rerun()  # ricarica la pagina, così i totali si aggiornano
             else:
-                descrizione, offerta, obiettivo, indicatore = lg.GRUPPI[riga["Nome_gruppo"]]
+                descrizione, offerta, obiettivo, indicatore, perche = lg.GRUPPI[riga["Nome_gruppo"]]
                 st.success(f"Gruppo di appartenenza: **{riga['Nome_gruppo']}**")
                 st.write(
                     f"Importo negli ultimi 90 giorni: {riga['Importo_totale_90gg']} € "
                     f"({piano} × {lg.mesi_pagati(data_iscrizione)} mesi, calcolati dalla data di iscrizione)."
                 )
                 st.write(f"**Chi sono:** {descrizione}")
-                st.write(f"**Idea di offerta:** {offerta}")
+                st.write(f"**Offerta da proporre:** {offerta}")
                 st.write(f"**Obiettivo:** {obiettivo}. **Come misurarlo:** {indicatore}.")
                 st.caption("Il cliente non è stato aggiunto. Premi \"Aggiungi ai clienti\" per salvarlo.")
 
