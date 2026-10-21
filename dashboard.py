@@ -67,21 +67,20 @@ if filtrati.empty:
 st.write(f"**Clienti selezionati:** {len(filtrati)} su {len(clienti)}")
 
 
-def etichetta(nome_colonna):
-    """Nome leggibile di una colonna, da mostrare nei menu."""
-    return lg.ETICHETTE[nome_colonna]
-
-
 tab_gruppi, tab_offerte, tab_nuovo, tab_metodo, tab_dati = st.tabs(
     ["Gruppi", "Idee di offerta", "Nuovo cliente", "Come sono stati scelti i gruppi", "Dati"]
 )
 
 # ---------- Gruppi: scatter plot e profilo ----------
 with tab_gruppi:
-    sx, sy = st.columns(2)
-    asse_x = sx.selectbox("Asse orizzontale", lg.VARIABILI, index=2, format_func=etichetta)
-    asse_y = sy.selectbox("Asse verticale", lg.VARIABILI, index=0, format_func=etichetta)
-    st.scatter_chart(filtrati, x=asse_x, y=asse_y, color="Nome_gruppo")
+    # Assi fissi: giorni dall'ultimo accesso (orizzontale) e accessi negli ultimi 90 giorni (verticale)
+    dati_grafico = filtrati.rename(columns=lg.ETICHETTE)
+    st.scatter_chart(
+        dati_grafico,
+        x=lg.ETICHETTE["Giorni_ultimo_accesso"],
+        y=lg.ETICHETTE["Accessi_90gg"],
+        color="Nome_gruppo",
+    )
 
     st.subheader("Profilo dei gruppi")
     profilo = lg.profilo_gruppi(filtrati)

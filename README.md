@@ -105,7 +105,7 @@ I nomi dei gruppi sono assegnati da `segmentazione.py` con regole basate sulle m
 ## La dashboard
 
 - **Filtri** (in alto): zona e categoria preferita (menu a tendina, voce «Tutte») e periodo di iscrizione (data iniziale e finale).
-- **Gruppi**: grafico a dispersione (assi selezionabili), profilo e numerosità di ciascun gruppo.
+- **Gruppi**: grafico a dispersione (giorni dall'ultimo accesso e accessi negli ultimi 90 giorni), profilo e numerosità di ciascun gruppo.
 - **Idee di offerta**: per ogni gruppo, chi sono, offerta da proporre (azione, durata e prezzo scontato),
   perché conviene, obiettivo, come misurarne l'effetto, e il peso economico (clienti, ricavi e percentuale dei ricavi, che cambiano con i filtri).
 - **Nuovo cliente**: inserendo accessi, giorni dall'ultimo accesso, data di iscrizione, piano,
