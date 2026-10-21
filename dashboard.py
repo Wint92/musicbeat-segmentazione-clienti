@@ -73,13 +73,15 @@ tab_gruppi, tab_offerte, tab_nuovo, tab_metodo, tab_dati = st.tabs(
 
 # ---------- Gruppi: scatter plot e profilo ----------
 with tab_gruppi:
-    # Assi fissi: giorni dall'ultimo accesso (orizzontale) e accessi negli ultimi 90 giorni (verticale)
-    dati_grafico = filtrati.rename(columns=lg.ETICHETTE)
+    # Assi fissi: giorni dall'ultimo accesso (orizzontale) e accessi negli ultimi 90 giorni (verticale).
+    # Si usano i nomi originali delle colonne; le scritte sugli assi sono date con x_label e y_label.
     st.scatter_chart(
-        dati_grafico,
-        x=lg.ETICHETTE["Giorni_ultimo_accesso"],
-        y=lg.ETICHETTE["Accessi_90gg"],
+        filtrati,
+        x="Giorni_ultimo_accesso",
+        y="Accessi_90gg",
         color="Nome_gruppo",
+        x_label="Giorni dall'ultimo accesso",
+        y_label="Accessi negli ultimi 90 giorni",
     )
 
     st.subheader("Profilo dei gruppi")
