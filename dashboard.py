@@ -63,14 +63,9 @@ if filtrati.empty:
     st.warning("Nessun cliente corrisponde ai filtri scelti.")
     st.stop()
 
-# ---------- Numeri principali ----------
-riassunto = pd.DataFrame([{
-    "Clienti selezionati": f"{len(filtrati)} su {len(clienti)}",
-    "Importo medio (90 giorni)": f"{filtrati['Importo_totale_90gg'].mean():.1f} €",
-    "Accessi medi (90 giorni)": f"{filtrati['Accessi_90gg'].mean():.1f}",
-    "Giorni medi dall'ultimo accesso": f"{filtrati['Giorni_ultimo_accesso'].mean():.1f}",
-}])
-st.dataframe(riassunto, hide_index=True)
+# ---------- Numero di clienti ----------
+st.write(f"**Clienti selezionati:** {len(filtrati)} su {len(clienti)}")
+
 
 def etichetta(nome_colonna):
     """Nome leggibile di una colonna, da mostrare nei menu."""
