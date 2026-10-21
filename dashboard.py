@@ -11,7 +11,7 @@ import streamlit as st
 
 import logica as lg
 
-st.set_page_config(page_title="MusicBeat - Segmentazione clienti", layout="wide")
+st.set_page_config(page_title="MusicBeat: segmentazione clienti", layout="wide")
 
 risultati = lg.carica_risultati()
 if risultati is None:
@@ -22,7 +22,7 @@ if risultati is None:
     st.stop()
 clienti, confronto, modello = risultati
 
-st.title("MusicBeat · Segmentazione dei clienti")
+st.title("MusicBeat: segmentazione dei clienti")
 st.caption(
     "Dati interamente simulati, senza informazioni personali. "
     "I gruppi sono trovati con K-means (apprendimento non supervisionato)."
@@ -33,25 +33,30 @@ if "messaggio" in st.session_state:
     st.success(st.session_state.pop("messaggio"))
 
 # ---------- Filtri ----------
-st.sidebar.header("Filtri")
 tutte_zone = sorted(clienti["Zona"].unique())
 tutte_categorie = sorted(clienti["Categoria_preferita"].unique())
-
-zone = st.sidebar.multiselect("Zona", tutte_zone, default=tutte_zone)
-categorie = st.sidebar.multiselect("Categoria preferita", tutte_categorie, default=tutte_categorie)
-
 data_min = clienti["Data_iscrizione"].min().date()
 data_max = clienti["Data_iscrizione"].max().date()
-periodo = st.sidebar.date_input(
-    "Periodo di iscrizione",
-    value=(data_min, data_max),
-    min_value=data_min,
-    max_value=data_max,
-)
-if len(periodo) != 2:
-    st.sidebar.info("Seleziona sia la data iniziale sia la data finale.")
+
+st.subheader("Filtri")
+f1, f2, f3, f4 = st.columns(4)
+zona_scelta = f1.selectbox("Zona", ["Tutte"] + tutte_zone)
+categoria_scelta = f2.selectbox("Categoria preferita", ["Tutte"] + tutte_categorie)
+data_da = f3.date_input("Iscritti dal", value=data_min, min_value=data_min, max_value=data_max)
+data_a = f4.date_input("Iscritti fino al", value=data_max, min_value=data_min, max_value=data_max)
+if data_da > data_a:
+    st.warning("La data iniziale è dopo quella finale.")
     st.stop()
-data_da, data_a = periodo
+
+# "Tutte" = nessun filtro: si usano tutte le zone o tutte le categorie
+if zona_scelta == "Tutte":
+    zone = tutte_zone
+else:
+    zone = [zona_scelta]
+if categoria_scelta == "Tutte":
+    categorie = tutte_categorie
+else:
+    categorie = [categoria_scelta]
 
 filtrati = lg.filtra(clienti, zone, categorie, data_da, data_a)
 if filtrati.empty:
@@ -59,11 +64,13 @@ if filtrati.empty:
     st.stop()
 
 # ---------- Numeri principali ----------
-c1, c2, c3, c4 = st.columns(4)
-c1.metric("Clienti selezionati", f"{len(filtrati)} su {len(clienti)}")
-c2.metric("Importo medio (90 giorni)", f"{filtrati['Importo_totale_90gg'].mean():.1f} €")
-c3.metric("Accessi medi (90 giorni)", f"{filtrati['Accessi_90gg'].mean():.1f}")
-c4.metric("Giorni medi dall'ultimo accesso", f"{filtrati['Giorni_ultimo_accesso'].mean():.1f}")
+riassunto = pd.DataFrame([{
+    "Clienti selezionati": f"{len(filtrati)} su {len(clienti)}",
+    "Importo medio (90 giorni)": f"{filtrati['Importo_totale_90gg'].mean():.1f} €",
+    "Accessi medi (90 giorni)": f"{filtrati['Accessi_90gg'].mean():.1f}",
+    "Giorni medi dall'ultimo accesso": f"{filtrati['Giorni_ultimo_accesso'].mean():.1f}",
+}])
+st.dataframe(riassunto, hide_index=True)
 
 def etichetta(nome_colonna):
     """Nome leggibile di una colonna, da mostrare nei menu."""
